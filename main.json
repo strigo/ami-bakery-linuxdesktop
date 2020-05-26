@@ -1,0 +1,61 @@
+{
+  "variables": {
+
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "ami_virtualization_type": "hvm",
+      "region": "eu-west-1",
+      "ami_name": "Linux Desktop Test 2",
+
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "ssh_username": "ubuntu",
+
+      "instance_type": "t2.medium",
+      "run_tags": {
+        "Name": "AMI Builder"
+      },
+      "vpc_id": "vpc-6991910d"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "while [ ! -f /var/lib/cloud/instance/boot-finished ]; do echo 'Waiting for cloud-init...'; sleep 1; done"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "./configs",
+      "destination": "/tmp"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'packer' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "environment_vars": [
+        "DEBIAN_FRONTEND=noninteractive"
+      ],
+      "scripts":[
+        "scripts/init.sh",
+        "scripts/users.sh",
+        "scripts/install-xfce.sh",
+        "scripts/install-vnc.sh",
+        "scripts/install-xrdp.sh",
+        "scripts/cleanup.sh"
+      ]
+    },
+    {
+      "type": "breakpoint"
+    }
+  ]
+}
