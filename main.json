@@ -1,13 +1,19 @@
 {
   "variables": {
-
+    "build_vpc": null,
+    "owners": null,
+    "ami_regions": null
   },
   "builders": [
     {
       "type": "amazon-ebs",
-      "ami_virtualization_type": "hvm",
       "region": "eu-west-1",
-      "ami_name": "Linux Desktop Test 2",
+      "ami_name": "strigo.io/ubuntu-20.04-LTS-xrdp_{{timestamp}}",
+      "ami_description": "Strigo.io preconfigured image based on Ubuntu 20.04 LTS Server with XFCE desktop and xrdp preinstalled. Built on {{isotime \"2006-01-02\"}}",
+      "tags": {
+        "source_ami": "{{ .SourceAMI }}",
+        "source_ami_name": "{{ .SourceAMIName }}"
+      },
 
       "source_ami_filter": {
         "filters": {
@@ -18,13 +24,17 @@
         "owners": ["099720109477"],
         "most_recent": true
       },
-      "ssh_username": "ubuntu",
 
+      "ssh_username": "ubuntu",
+      "ami_virtualization_type": "hvm",
       "instance_type": "t2.medium",
       "run_tags": {
         "Name": "AMI Builder"
       },
-      "vpc_id": "vpc-6991910d"
+      "vpc_id": "{{user `build_vpc`}}",
+
+      "ami_regions": "{{user `ami_regions`}}",
+      "ami_users": "{{user `owners`}}"
     }
   ],
   "provisioners": [
@@ -47,15 +57,11 @@
       ],
       "scripts":[
         "scripts/init.sh",
-        "scripts/users.sh",
         "scripts/install-xfce.sh",
-        "scripts/install-vnc.sh",
         "scripts/install-xrdp.sh",
+        "scripts/install-commons.sh",
         "scripts/cleanup.sh"
       ]
-    },
-    {
-      "type": "breakpoint"
     }
   ]
 }
