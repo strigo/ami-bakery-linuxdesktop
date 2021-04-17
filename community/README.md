@@ -4,7 +4,7 @@ In this folder, you can find different configurations for different Linux distri
 
 You can use these configurations to create your own AMIs, (officially documented [here](http://help.strigo.io/en/articles/4248818-set-up-linux-based-labs-with-a-desktop-interface)), and use them to run [Linux Desktops within Strigo](http://help.strigo.io/en/articles/4245713-configure-lab-interfaces).
 
-While we currently don't propose Packer files for these configurations, you can modify the one we officially provide [here](https://github.com/strigo/ami-bakery-linuxdesktop/blob/master/main.json), and base your AMI provisioning on it.
+While we currently don't offer Packer files for these configurations, you can modify the one we officially provide [here](https://github.com/strigo/ami-bakery-linuxdesktop/blob/master/main.json), and base your AMI provisioning on it.
 
 ## Contributions
 
