@@ -1,6 +1,6 @@
 # Community Linux Desktop AMI builders
 
-In this folder, you can find different configurations for different Linux distributions, currently not officially supported by Strigo.
+In this folder, you can find different configurations for different Linux distributions, currently not officially supported by Strigo. The reason why we don't officially support any use case is because Linux distrubitions and configurations are too vast for us to support out of the box. If you're trying to run anything other than the officially supported Ubuntu 20 config and are running into trouble, feel free to open an issue here, and we'll try to help you resolve it.
 
 You can use these configurations to create your own AMIs, (officially documented [here](http://help.strigo.io/en/articles/4248818-set-up-linux-based-labs-with-a-desktop-interface)), and use them to run [Linux Desktops within Strigo](http://help.strigo.io/en/articles/4245713-configure-lab-interfaces).
 
