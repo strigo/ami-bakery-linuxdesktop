@@ -2,14 +2,16 @@
   "variables": {
     "build_vpc": null,
     "owners": null,
-    "ami_regions": null
+    "ami_regions": null,
+    "ubuntu_version": null,
+    "ubuntu_code": null
   },
   "builders": [
     {
       "type": "amazon-ebs",
       "region": "eu-west-1",
-      "ami_name": "strigo.io/ubuntu-20.04-LTS-xrdp_{{timestamp}}",
-      "ami_description": "Strigo.io preconfigured image based on Ubuntu 20.04 LTS Server with XFCE desktop and xrdp preinstalled. Built on {{isotime \"2006-01-02\"}}",
+      "ami_name": "strigo.io/ubuntu-{{user `ubuntu_version`}}-LTS-xrdp_{{timestamp}}",
+      "ami_description": "Strigo.io preconfigured image based on Ubuntu {{user `ubuntu_version`}} LTS Server with XFCE desktop and xrdp preinstalled. Built on {{isotime \"2006-01-02\"}}",
       "tags": {
         "source_ami": "{{ .SourceAMI }}",
         "source_ami_name": "{{ .SourceAMIName }}"
@@ -18,7 +20,7 @@
       "source_ami_filter": {
         "filters": {
           "virtualization-type": "hvm",
-          "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-{{user `ubuntu_code`}}-{{user `ubuntu_version`}}-amd64-server-*",
           "root-device-type": "ebs"
         },
         "owners": ["099720109477"],
@@ -27,7 +29,7 @@
 
       "ssh_username": "ubuntu",
       "ami_virtualization_type": "hvm",
-      "instance_type": "t2.medium",
+      "instance_type": "t3.medium",
       "run_tags": {
         "Name": "AMI Builder"
       },
